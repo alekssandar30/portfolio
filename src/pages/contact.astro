@@ -1,0 +1,112 @@
+---
+import SectionIntro from "@/components/SectionIntro.astro";
+import { person } from "@/data/person";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact Aleksandar Novakovic for B2B software engineering engagements."
+  pathname="/contact"
+>
+  <section class="page-section">
+    <div class="container-shell">
+      <SectionIntro
+        eyebrow="Contact"
+        title="Available for B2B software engineering engagements."
+        text="Frontend, backend, full-stack product work, architecture and modernization."
+      />
+      <dl class="contact-list">
+        <div>
+          <dt>Location</dt>
+          <dd>{person.location}</dd>
+        </div>
+        <div>
+          <dt>Engagement</dt>
+          <dd>Independent B2B contractor through {person.company}</dd>
+        </div>
+        {
+          person.emailLabel && (
+            <div>
+              <dt>Email</dt>
+              <dd>
+                <a href={person.emailHref}>{person.emailLabel}</a>
+              </dd>
+            </div>
+          )
+        }
+        {
+          (person.links.linkedin || person.links.github) && (
+            <div>
+              <dt>Profiles</dt>
+              <dd class="profile-links">
+                {person.links.linkedin && (
+                  <a href={person.links.linkedin}>LinkedIn</a>
+                )}
+                {person.links.github && (
+                  <a href={person.links.github}>GitHub</a>
+                )}
+              </dd>
+            </div>
+          )
+        }
+      </dl>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-section {
+    min-height: 70vh;
+    padding-block: 5rem 8rem;
+  }
+
+  .contact-list {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .contact-list > div {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  dt {
+    color: var(--signal-strong);
+    font-size: 0.875rem;
+    font-weight: 650;
+  }
+
+  dd {
+    max-width: 44rem;
+    margin: 0;
+    color: var(--muted);
+    font-size: 1.125rem;
+  }
+
+  dd a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .profile-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .page-section {
+      padding-block: 8rem 12rem;
+    }
+
+    .contact-list > div {
+      grid-template-columns: 12rem minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    dd {
+      font-size: 1.25rem;
+    }
+  }
+</style>

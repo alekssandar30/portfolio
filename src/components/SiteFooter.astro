@@ -1,0 +1,58 @@
+---
+import { person } from "@/data/person";
+---
+
+<footer class="site-footer">
+  <div
+    class="container-shell flex flex-col gap-8 md:flex-row md:items-end md:justify-between"
+  >
+    <div>
+      <p class="footer-name">{person.name}</p>
+      <p class="footer-copy">{person.title} through {person.company}</p>
+    </div>
+    <div class="footer-nav" aria-label="Footer navigation">
+      <a href="/work">Work</a>
+      <a href="/about">About</a>
+      <a href="/notes">Notes</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+    padding-block: 2.5rem;
+  }
+
+  .footer-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+
+  .footer-copy {
+    margin-top: 0.25rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.5rem;
+  }
+
+  .footer-nav a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.875rem;
+    transition: color 160ms var(--ease-out);
+  }
+
+  .footer-nav a:hover {
+    color: var(--signal-strong);
+  }
+</style>

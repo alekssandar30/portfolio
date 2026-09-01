@@ -1,0 +1,104 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const technologies = project.data.technologies.slice(0, 5);
+---
+
+<article>
+  <a class="project-row" href={`/work/${project.slug}`}>
+    <span class="project-index">{String(index + 1).padStart(2, "0")}</span>
+    <div class="project-main">
+      <p class="project-industry">{project.data.industry}</p>
+      <h3>{project.data.title}</h3>
+      <p class="project-summary">{project.data.summary}</p>
+    </div>
+    <div class="project-meta">
+      {technologies.length > 0 && <p>{technologies.join(" · ")}</p>}
+      <span class="project-link">
+        Case study <span class="link-arrow" aria-hidden="true">→</span>
+      </span>
+    </div>
+  </a>
+</article>
+
+<style>
+  article + article {
+    margin-top: 1.25rem;
+  }
+
+  .project-row {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1.5rem;
+    transition: color 160ms var(--ease-out);
+  }
+
+  .project-index,
+  .project-industry,
+  .project-meta {
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+
+  h3 {
+    margin-top: 0.5rem;
+    font-size: 1.75rem;
+    font-weight: 620;
+    letter-spacing: 0;
+    line-height: 1.05;
+  }
+
+  .project-summary {
+    max-width: 58ch;
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .project-meta {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .project-link {
+    color: var(--signal-strong);
+    font-weight: 650;
+  }
+
+  .project-row:hover h3 {
+    color: var(--signal-strong);
+  }
+
+  .project-row:active {
+    color: var(--signal-strong);
+  }
+
+  @media (min-width: 48rem) {
+    .project-row {
+      grid-template-columns: 3rem minmax(0, 1.55fr) minmax(12rem, 0.65fr);
+      gap: 2rem;
+      padding-block: 2rem;
+    }
+
+    h3 {
+      font-size: 2.25rem;
+    }
+
+    .project-meta {
+      grid-column: auto;
+      justify-content: space-between;
+      padding-top: 1.75rem;
+      line-height: 1.6;
+    }
+  }
+</style>

@@ -1,0 +1,48 @@
+---
+import ProjectCard from "@/components/ProjectCard.astro";
+import SectionIntro from "@/components/SectionIntro.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const projectOrder = [
+  "linetracker",
+  "tender-scanner",
+  "ehzzo",
+  "nct",
+  "swap-fm",
+];
+const projects = (await getCollection("projects"))
+  .filter((project) => project.data.visibility !== "unknown")
+  .sort((a, b) => projectOrder.indexOf(a.slug) - projectOrder.indexOf(b.slug));
+---
+
+<BaseLayout
+  title="Work"
+  description="Selected software engineering work across industrial software, procurement technology, banking, healthcare and startup products."
+  pathname="/work"
+>
+  <section class="page-section">
+    <div class="container-shell">
+      <SectionIntro
+        eyebrow="Work"
+        title="Selected systems and product work."
+        text="Production engineering across industrial software, procurement technology, banking, healthcare and startup environments."
+      />
+      <div>
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-section {
+    padding-block: 5rem 7rem;
+  }
+
+  @media (min-width: 48rem) {
+    .page-section {
+      padding-block: 8rem 10rem;
+    }
+  }
+</style>

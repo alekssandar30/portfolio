@@ -1,0 +1,110 @@
+---
+import SectionIntro from "@/components/SectionIntro.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const notes = (await getCollection("notes")).filter(
+  (note) => note.data.published,
+);
+---
+
+<BaseLayout
+  title="Notes"
+  description="Technical notes on full-stack engineering, .NET, TypeScript and AI-native software workflows."
+  pathname="/notes"
+>
+  <section class="page-section">
+    <div class="container-shell">
+      <SectionIntro
+        eyebrow="Notes"
+        title="Notes on software systems and engineering workflow."
+        text="TypeScript, .NET, architecture, modernization and AI-native software delivery."
+      />
+      <div class="notes-list">
+        {
+          notes.map((note) => (
+            <article>
+              <a href={`/notes/${note.slug}`}>
+                <p class="note-topic">{note.data.topics[0] ?? "Engineering"}</p>
+                <h2>{note.data.title}</h2>
+                <p class="note-description">{note.data.description}</p>
+                <span>
+                  Read note{" "}
+                  <span class="link-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </span>
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-section {
+    min-height: 70vh;
+    padding-block: 5rem 8rem;
+  }
+
+  .notes-list {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  article a {
+    display: block;
+    padding-block: 2rem;
+  }
+
+  .note-topic {
+    color: var(--signal-strong);
+    font-size: 0.8125rem;
+    font-weight: 650;
+  }
+
+  h2 {
+    max-width: 24ch;
+    margin-top: 0.75rem;
+    font-size: 1.75rem;
+    font-weight: 620;
+    letter-spacing: 0;
+    line-height: 1.15;
+    transition: color 160ms var(--ease-out);
+  }
+
+  .note-description {
+    max-width: 60ch;
+    margin-top: 1rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  article a > span {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: var(--signal-strong);
+    font-size: 0.875rem;
+    font-weight: 650;
+  }
+
+  article a:hover h2 {
+    color: var(--signal-strong);
+  }
+
+  @media (min-width: 48rem) {
+    .page-section {
+      padding-block: 8rem 12rem;
+    }
+
+    article a {
+      padding-block: 2.25rem;
+    }
+
+    h2 {
+      font-size: 2.25rem;
+    }
+  }
+</style>

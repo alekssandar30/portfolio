@@ -1,0 +1,50 @@
+---
+import { technologyGroups } from "@/data/technologies";
+---
+
+<div class="stack-list">
+  {
+    technologyGroups.map((group) => (
+      <article>
+        <h3>{group.label}</h3>
+        <p>{group.items.join(" · ")}</p>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .stack-list {
+    display: grid;
+    gap: 2rem;
+  }
+
+  article {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  h3 {
+    color: var(--signal-strong);
+    font-size: 0.875rem;
+    font-weight: 650;
+  }
+
+  p {
+    max-width: 60ch;
+    color: var(--muted);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  @media (min-width: 48rem) {
+    article {
+      grid-template-columns: 12rem minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    p {
+      font-size: 1.125rem;
+    }
+  }
+</style>

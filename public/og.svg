@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Aleksandar Novakovic, Full-Stack Software Engineer</title>
+  <desc id="description">Portfolio social preview for Aleksandar Novakovic and mBIT Solutions.</desc>
+  <rect width="1200" height="630" fill="#111712"/>
+  <rect x="88" y="92" width="52" height="6" fill="#70b58c"/>
+  <text x="88" y="158" fill="#a9afa9" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="25" font-weight="650">FULL-STACK SOFTWARE ENGINEER</text>
+  <text x="88" y="286" fill="#efefe9" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="86" font-weight="720">Aleksandar</text>
+  <text x="88" y="382" fill="#70b58c" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="86" font-weight="720">Novakovic.</text>
+  <text x="88" y="476" fill="#a9afa9" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="30">TypeScript · C#/.NET · Production systems</text>
+  <text x="88" y="548" fill="#efefe9" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="26" font-weight="650">mBIT Solutions · Novi Sad, Serbia</text>
+</svg>

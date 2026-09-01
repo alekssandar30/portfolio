@@ -1,0 +1,313 @@
+---
+const layers = [
+  { label: "Product UI", detail: "Angular / React" },
+  { label: "Frontend system", detail: "TypeScript / state / integration" },
+  { label: "APIs & services", detail: "C# / .NET / Node" },
+  { label: "Data systems", detail: "SQL Server / PostgreSQL" },
+  { label: "Production", detail: "Azure / Cloudflare / Hetzner" },
+];
+
+const agentSteps = ["Explore", "Plan", "Implement", "Verify"];
+---
+
+<section
+  class="system-trace trace-surface engineering-system"
+  aria-labelledby="engineering-system-title"
+>
+  <header class="system-header">
+    <p class="trace-annotation">System trace / stack</p>
+    <p class="trace-annotation">Connected engineering practice</p>
+  </header>
+
+  <div class="architecture-rail">
+    <div class="rail-copy">
+      <h3 id="engineering-system-title">Architecture</h3>
+      <p>Boundaries / contracts / maintainability</p>
+    </div>
+    <div class="architecture-taps" aria-hidden="true">
+      {layers.map(() => <i />)}
+    </div>
+  </div>
+
+  <ol class="stack-flow">
+    {
+      layers.map((layer, index) => (
+        <li>
+          <span class="flow-marker" aria-hidden="true" />
+          <span class="trace-annotation">{String(index + 1).padStart(2, "0")}</span>
+          <h3>{layer.label}</h3>
+          <p>{layer.detail}</p>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="agent-rail">
+    <div class="rail-copy">
+      <h3>AI-native engineering</h3>
+      <p>Feedback across the system</p>
+    </div>
+    <ol class="agent-flow">
+      {
+        agentSteps.map((step) => (
+          <li>
+            <span aria-hidden="true" />
+            <strong>{step}</strong>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .engineering-system {
+    padding: 1rem;
+  }
+
+  .system-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .architecture-rail,
+  .agent-rail {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .rail-copy h3 {
+    font-size: 1rem;
+    font-weight: 650;
+  }
+
+  .rail-copy p {
+    margin-top: 0.35rem;
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+
+  .architecture-taps {
+    display: none;
+  }
+
+  .stack-flow,
+  .agent-flow {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .stack-flow {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .stack-flow::before {
+    position: absolute;
+    top: 0.3rem;
+    bottom: 0.3rem;
+    left: 0.25rem;
+    width: 1px;
+    background: var(--trace-structure);
+    content: "";
+  }
+
+  .stack-flow li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: 0.2rem 0.75rem;
+  }
+
+  .flow-marker {
+    display: block;
+    z-index: 1;
+    grid-row: 1 / span 3;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-top: 0.05rem;
+    border: 2px solid var(--trace-active);
+    background: var(--canvas);
+    transition: background-color 180ms var(--ease-out);
+  }
+
+  .stack-flow h3 {
+    margin-top: 0.2rem;
+    font-size: 1.0625rem;
+    font-weight: 650;
+  }
+
+  .stack-flow li > p {
+    margin-top: 0.15rem;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .agent-rail {
+    margin-top: 2.75rem;
+  }
+
+  .agent-flow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .agent-flow li {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+
+  .agent-flow li > span {
+    width: 0.45rem;
+    height: 0.45rem;
+    border: 1px solid var(--trace-active);
+    background: var(--canvas);
+  }
+
+  .agent-flow strong {
+    font-weight: 560;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .engineering-system:hover .flow-marker,
+    .engineering-system:hover .agent-flow li > span {
+      background: var(--trace-active);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .engineering-system {
+      padding: 1.5rem;
+    }
+
+    .system-header {
+      margin-bottom: 3rem;
+    }
+
+    .architecture-rail,
+    .agent-rail {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .architecture-taps {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      align-items: start;
+      padding-top: 0.2rem;
+    }
+
+    .architecture-taps::before {
+      position: absolute;
+      top: 0.45rem;
+      right: 10%;
+      left: 10%;
+      height: 1px;
+      background: var(--trace-structure);
+      content: "";
+    }
+
+    .architecture-taps i {
+      position: relative;
+      z-index: 1;
+      justify-self: center;
+      width: 0.55rem;
+      height: 0.55rem;
+      border: 1px solid var(--trace-structure);
+      background: var(--canvas);
+    }
+
+    .architecture-taps i::after {
+      position: absolute;
+      top: 0.5rem;
+      left: 50%;
+      width: 1px;
+      height: 5.75rem;
+      background: var(--trace-subtle);
+      content: "";
+    }
+
+    .stack-flow {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin: 2.1rem 0 0 13rem;
+    }
+
+    .stack-flow::before {
+      top: 0.25rem;
+      right: 10%;
+      bottom: auto;
+      left: 10%;
+      width: auto;
+      height: 2px;
+      background: var(--trace-active);
+    }
+
+    .stack-flow li {
+      display: block;
+      min-width: 0;
+    }
+
+    .flow-marker {
+      margin: 0 auto 1.25rem;
+    }
+
+    .stack-flow h3,
+    .stack-flow li > p,
+    .stack-flow li > .trace-annotation {
+      display: block;
+      text-align: center;
+    }
+
+    .stack-flow h3 {
+      min-height: 2.75rem;
+    }
+
+    .agent-rail {
+      align-items: end;
+      margin-top: 3.5rem;
+    }
+
+    .agent-flow {
+      position: relative;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      padding-top: 1.25rem;
+    }
+
+    .agent-flow::before {
+      position: absolute;
+      top: 0.2rem;
+      right: 12.5%;
+      left: 12.5%;
+      height: 1px;
+      background: var(--trace-structure);
+      content: "";
+    }
+
+    .agent-flow li {
+      position: relative;
+      display: block;
+      text-align: center;
+    }
+
+    .agent-flow li > span {
+      position: absolute;
+      top: -1.25rem;
+      left: 50%;
+      z-index: 1;
+      transform: translateX(-50%);
+    }
+  }
+</style>

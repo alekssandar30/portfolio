@@ -1,0 +1,68 @@
+---
+import SiteFooter from "@/components/SiteFooter.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import { siteConfig } from "@/lib/site";
+import "@/styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  pathname?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const site = Astro.site ?? new URL(siteConfig.url);
+const pathname = Astro.props.pathname ?? Astro.url.pathname;
+const canonical = new URL(pathname, site).toString();
+const title = Astro.props.title ?? siteConfig.defaultTitle;
+const description = Astro.props.description ?? siteConfig.description;
+const pageTitle = title.includes("Aleksandar")
+  ? title
+  : `${title} | Aleksandar Novakovic`;
+const imageUrl = new URL(siteConfig.ogImage, site).toString();
+const jsonLd = Astro.props.jsonLd;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    {
+      jsonLd && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(jsonLd)}
+        />
+      )
+    }
+  </head>
+  <body>
+    <a
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-canvas"
+      href="#main"
+    >
+      Skip to content
+    </a>
+    <SiteHeader />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

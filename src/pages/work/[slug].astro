@@ -1,0 +1,231 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = (await getCollection("projects")).filter(
+    (project) => project.data.visibility !== "unknown",
+  );
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<BaseLayout
+  title={project.data.title}
+  description={project.data.summary}
+  pathname={`/work/${project.slug}`}
+>
+  <article class="project-page">
+    <div class="container-shell">
+      <a class="back-link" href="/work">← Work</a>
+
+      <header class="project-header">
+        <div>
+          <p class="eyebrow">{project.data.industry}</p>
+          <h1>{project.data.title}</h1>
+          {
+            project.data.subtitle && (
+              <p class="project-subtitle">{project.data.subtitle}</p>
+            )
+          }
+        </div>
+        <div class="project-overview">
+          <p class="project-summary">{project.data.summary}</p>
+          {
+            project.data.links?.website && (
+              <a
+                class="text-link project-website"
+                href={project.data.links.website}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Visit product <span aria-hidden="true">↗</span>
+              </a>
+            )
+          }
+        </div>
+      </header>
+
+      <div class="project-body">
+        <aside>
+          <dl>
+            <div>
+              <dt>Industry</dt>
+              <dd>{project.data.industry}</dd>
+            </div>
+            {
+              project.data.role && (
+                <div>
+                  <dt>Role</dt>
+                  <dd>{project.data.role}</dd>
+                </div>
+              )
+            }
+            {
+              project.data.client && (
+                <div>
+                  <dt>Client</dt>
+                  <dd>{project.data.client}</dd>
+                </div>
+              )
+            }
+            {
+              project.data.technologies.length > 0 && (
+                <div>
+                  <dt>Technology</dt>
+                  <dd>{project.data.technologies.join(" · ")}</dd>
+                </div>
+              )
+            }
+          </dl>
+        </aside>
+
+        <div class="project-content">
+          {
+            project.data.responsibilities && (
+              <section class="contribution">
+                <h2>Contribution</h2>
+                <ul>
+                  {project.data.responsibilities.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          <div class="prose prose-lg">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-page {
+    padding-block: 3rem 8rem;
+  }
+
+  .project-header {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding-bottom: 1rem;
+  }
+
+  h1 {
+    margin-top: 0.75rem;
+    font-size: 3rem;
+    font-weight: 620;
+    letter-spacing: 0;
+    line-height: 0.98;
+  }
+
+  .project-subtitle {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 1.125rem;
+  }
+
+  .project-summary {
+    max-width: 52ch;
+    color: var(--muted);
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .project-website {
+    margin-top: 1.25rem;
+  }
+
+  .project-body {
+    display: grid;
+    gap: 3.5rem;
+    padding-top: 3rem;
+  }
+
+  aside dl {
+    display: grid;
+    gap: 1.5rem;
+    margin: 0;
+  }
+
+  aside dl > div {
+    padding-bottom: 0.5rem;
+  }
+
+  dt {
+    color: var(--signal-strong);
+    font-size: 0.8125rem;
+    font-weight: 650;
+  }
+
+  dd {
+    margin: 0.5rem 0 0;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .project-content {
+    max-width: 48rem;
+  }
+
+  .contribution {
+    margin-bottom: 3rem;
+  }
+
+  .contribution h2 {
+    font-size: 1.5rem;
+    font-weight: 650;
+  }
+
+  .contribution ul {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.25rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .prose {
+    max-width: 65ch;
+  }
+
+  @media (min-width: 48rem) {
+    .project-page {
+      padding-block: 4rem 12rem;
+    }
+
+    .project-header {
+      grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+      gap: 5rem;
+      align-items: end;
+      margin-top: 4rem;
+      padding-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 4.25rem;
+    }
+
+    .project-body {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      gap: 6rem;
+      padding-top: 4rem;
+    }
+  }
+</style>

@@ -1,0 +1,172 @@
+---
+import SectionIntro from "@/components/SectionIntro.astro";
+import { person } from "@/data/person";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { personSchema, professionalServiceSchema } from "@/lib/schema";
+import { siteConfig } from "@/lib/site";
+
+const siteUrl = Astro.site?.toString() ?? siteConfig.url;
+---
+
+<BaseLayout
+  title="About"
+  description="About Aleksandar Novakovic, full-stack software engineer."
+  pathname="/about"
+  jsonLd={[personSchema(siteUrl), professionalServiceSchema(siteUrl)]}
+>
+  <section class="page-section">
+    <div class="container-shell">
+      <SectionIntro
+        eyebrow="About"
+        title="Software engineering for production systems."
+        text="Full-stack engineering across established enterprise applications and product teams."
+      />
+
+      <div class="profile-layout">
+        <aside>
+          <img
+            src="/aleksandar-novakovic.png"
+            alt="Aleksandar Novakovic"
+            width="256"
+            height="256"
+          />
+          <p>{person.location}</p>
+          <p>{person.company}</p>
+        </aside>
+
+        <div class="profile-copy">
+          <p>
+            I am Aleksandar Novakovic, a full-stack software engineer from Novi
+            Sad, Serbia, working independently through mBIT Solutions.
+          </p>
+          <p>
+            Over the past seven-plus years I have worked on production software
+            across frontend and backend systems, primarily using TypeScript,
+            C#/.NET, Angular, React and Node.js.
+          </p>
+          <p>
+            My experience spans enterprise applications, financial systems,
+            banking, industrial and construction software, e-health platforms
+            and startup products.
+          </p>
+          <p>
+            I usually work inside existing engineering teams where the challenge
+            is understanding an established system, navigating its constraints,
+            improving architecture where it matters and delivering features
+            without destabilizing production.
+          </p>
+          <p>
+            My workflow has increasingly become AI-native. I use coding agents
+            for codebase exploration, implementation planning, research,
+            refactoring and development while keeping architecture, verification
+            and engineering decisions under explicit control.
+          </p>
+          <p>
+            I care less about particular frameworks than about building software
+            that remains understandable, maintainable and useful after it
+            reaches production.
+          </p>
+
+          <dl class="profile-facts">
+            <div>
+              <dt>Education</dt>
+              <dd>{person.education.institution}</dd>
+              <dd>{person.education.focus}</dd>
+            </div>
+            <div>
+              <dt>Languages</dt>
+              {
+                person.languages.map((language) => (
+                  <dd>
+                    {language.name} · {language.level}
+                  </dd>
+                ))
+              }
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-section {
+    padding-block: 5rem 7rem;
+  }
+
+  .profile-layout {
+    display: grid;
+    gap: 3rem;
+  }
+
+  aside img {
+    width: 8rem;
+  }
+
+  aside p {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  aside p + p {
+    margin-top: 0.2rem;
+  }
+
+  .profile-copy {
+    max-width: 44rem;
+  }
+
+  .profile-copy > p {
+    margin-top: 1.5rem;
+    color: var(--muted);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+
+  .profile-copy > p:first-child {
+    margin-top: 0;
+    color: var(--ink);
+    font-size: 1.25rem;
+    line-height: 1.45;
+  }
+
+  .profile-facts {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  dt {
+    margin-bottom: 0.75rem;
+    color: var(--signal-strong);
+    font-size: 0.875rem;
+    font-weight: 650;
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  @media (min-width: 48rem) {
+    .page-section {
+      padding-block: 8rem 10rem;
+    }
+
+    .profile-layout {
+      grid-template-columns: 12rem minmax(0, 1fr);
+      gap: 6rem;
+    }
+
+    aside img {
+      width: 10rem;
+    }
+
+    .profile-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

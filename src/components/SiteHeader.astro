@@ -1,0 +1,147 @@
+---
+import { navigation } from "@/data/navigation";
+import { person } from "@/data/person";
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <nav class="primary-nav container-shell" aria-label="Primary navigation">
+    <a href="/" class="site-identity" aria-label="Aleksandar Novakovic home">
+      <span class="identity-short" aria-hidden="true">AN</span>
+      <span class="identity-name">{person.name}</span>
+    </a>
+    <div class="nav-items">
+      {
+        navigation.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "nav-link",
+              pathname === item.href || pathname.startsWith(`${item.href}/`)
+                ? "nav-link-active"
+                : "",
+            ]}
+            aria-current={
+              pathname === item.href || pathname.startsWith(`${item.href}/`)
+                ? "page"
+                : undefined
+            }
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 20;
+    border-bottom: 1px solid var(--line);
+    background: var(--canvas);
+  }
+
+  .primary-nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-block: 0.5rem;
+  }
+
+  .site-identity {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+
+  .nav-items {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .identity-short {
+    display: block;
+  }
+
+  .identity-name {
+    display: none;
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 0.25rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+    font-weight: 560;
+    transition: color 160ms var(--ease-out);
+  }
+
+  .nav-link::after {
+    position: absolute;
+    right: 0.25rem;
+    bottom: 0.35rem;
+    left: 0.25rem;
+    height: 1px;
+    background: var(--signal);
+    content: "";
+    opacity: 0;
+    transform: scaleX(0.7);
+    transition:
+      opacity 160ms var(--ease-out),
+      transform 160ms var(--ease-out);
+  }
+
+  .nav-link:hover,
+  .nav-link-active {
+    color: var(--ink);
+  }
+
+  .nav-link-active::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  @media (min-width: 34rem) {
+    .primary-nav {
+      display: flex;
+      min-height: 4.5rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 0;
+    }
+
+    .identity-short {
+      display: none;
+    }
+
+    .identity-name {
+      display: block;
+    }
+
+    .nav-link {
+      padding-inline: 0.7rem;
+    }
+
+    .nav-link::after {
+      right: 0.7rem;
+      left: 0.7rem;
+    }
+
+    .nav-items {
+      display: flex;
+      width: auto;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+</style>

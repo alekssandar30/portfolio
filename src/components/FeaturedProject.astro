@@ -1,0 +1,143 @@
+---
+import ProjectSystemTrace from "@/components/ProjectSystemTrace.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+---
+
+<article class="featured-project">
+  <a href={`/work/${project.slug}`}>
+    <div class="project-heading">
+      <span>{String(index + 1).padStart(2, "0")}</span>
+      <p>{project.data.industry}</p>
+    </div>
+
+    <div class="project-layout">
+      <div class="project-copy">
+        <div>
+          <h3>{project.data.title}</h3>
+          {project.data.subtitle && <p class="subtitle">{project.data.subtitle}</p>}
+        </div>
+
+        <p class="summary">{project.data.summary}</p>
+
+        <div class="project-footer">
+          <p class="technologies">{project.data.technologies.join(" / ")}</p>
+          <span class="project-link">
+            View case study <span class="link-arrow" aria-hidden="true">→</span>
+          </span>
+        </div>
+      </div>
+
+      <ProjectSystemTrace />
+    </div>
+  </a>
+</article>
+
+<style>
+  .featured-project {
+    margin-bottom: 4rem;
+  }
+
+  .project-heading {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+
+  .project-layout {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .project-copy {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    font-weight: 620;
+    line-height: 1;
+    transition: color 180ms var(--ease-out);
+  }
+
+  .subtitle {
+    margin-top: 0.75rem;
+    color: var(--ink);
+    font-size: 1.125rem;
+  }
+
+  .summary {
+    max-width: 48ch;
+    margin-top: 1.5rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .project-footer {
+    margin-top: 2rem;
+  }
+
+  .technologies {
+    max-width: 34ch;
+    color: var(--muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.75rem;
+    line-height: 1.7;
+  }
+
+  .project-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    color: var(--signal-strong);
+    font-size: 0.875rem;
+    font-weight: 650;
+  }
+
+  a:hover h3 {
+    color: var(--signal-strong);
+  }
+
+  @media (min-width: 48rem) {
+    .featured-project {
+      margin-bottom: 5rem;
+    }
+
+    .project-heading {
+      grid-template-columns: 3rem minmax(0, 1fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .project-layout {
+      grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
+      gap: 5rem;
+      align-items: stretch;
+    }
+
+    .project-copy {
+      padding-block: 1rem;
+    }
+
+    h3 {
+      font-size: 3rem;
+    }
+
+    .project-footer {
+      margin-top: auto;
+      padding-top: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { articleSchema } from "@/lib/schema";
+import { siteConfig } from "@/lib/site";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const notes = (await getCollection("notes")).filter(
+    (note) => note.data.published,
+  );
+  return notes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note },
+  }));
+}
+
+interface Props {
+  note: CollectionEntry<"notes">;
+}
+
+const { note } = Astro.props;
+const { Content } = await note.render();
+const siteUrl = Astro.site?.toString() ?? siteConfig.url;
+---
+
+<BaseLayout
+  title={note.data.title}
+  description={note.data.description}
+  pathname={`/notes/${note.slug}`}
+  jsonLd={articleSchema(
+    siteUrl,
+    `/notes/${note.slug}`,
+    note.data.title,
+    note.data.description,
+  )}
+>
+  <article class="note-page">
+    <div class="note-shell">
+      <a class="back-link" href="/notes">← Notes</a>
+      <header>
+        <p class="eyebrow">{note.data.topics.join(" · ")}</p>
+        <h1>{note.data.title}</h1>
+        <p class="note-description">{note.data.description}</p>
+      </header>
+      <div class="prose prose-lg">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .note-page {
+    padding-block: 3rem 8rem;
+  }
+
+  .note-shell {
+    width: min(calc(100% - 2rem), 48rem);
+    margin-inline: auto;
+  }
+
+  header {
+    margin-top: 2.5rem;
+    padding-bottom: 1rem;
+  }
+
+  h1 {
+    margin-top: 1rem;
+    font-size: 2.5rem;
+    font-weight: 620;
+    letter-spacing: 0;
+    line-height: 1.05;
+  }
+
+  .note-description {
+    max-width: 60ch;
+    margin-top: 1.5rem;
+    color: var(--muted);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .prose {
+    max-width: 65ch;
+    margin-top: 3rem;
+  }
+
+  @media (min-width: 48rem) {
+    .note-page {
+      padding-block: 4rem 12rem;
+    }
+
+    .note-shell {
+      width: min(calc(100% - 4rem), 48rem);
+    }
+
+    header {
+      margin-top: 4rem;
+      padding-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+    }
+
+    .prose {
+      margin-top: 4rem;
+    }
+  }
+</style>
