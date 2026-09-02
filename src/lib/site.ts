@@ -7,7 +7,7 @@ export const siteConfig = {
   description:
     "Full-stack software engineer specializing in TypeScript and C#/.NET, building production web systems for companies across Europe.",
   url: import.meta.env.SITE,
-  ogImage: "/og.svg",
+  ogImage: "/og.png",
 } as const;
 
 export function absoluteUrl(path: string, site = siteConfig.url) {

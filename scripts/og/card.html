@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face {
+    font-family: "Archivo";
+    font-weight: 100 900;
+    src: url("../../public/fonts/archivo-latin-wght.woff2") format("woff2-variations");
+  }
+  @font-face {
+    font-family: "JetBrains Mono";
+    font-weight: 100 800;
+    src: url("../../public/fonts/jetbrains-mono-latin-wght.woff2") format("woff2-variations");
+  }
+  :root {
+    --canvas: #0d110d;
+    --ink: #edf2ea;
+    --body: #b6bfb3;
+    --muted: #97a295;
+    --faint: #7a8578;
+    --line-strong: rgba(237, 242, 234, 0.14);
+    --grid-line: rgba(237, 242, 234, 0.045);
+    --accent: #d7f755;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    background-color: var(--canvas);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    color: var(--ink);
+    font-family: Archivo, sans-serif;
+  }
+  .mono {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .top {
+    position: absolute;
+    top: 64px;
+    left: 72px;
+    right: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .eyebrow { display: flex; align-items: center; gap: 16px; }
+  .dot { width: 12px; height: 12px; background: var(--accent); }
+  .name {
+    position: absolute;
+    top: 134px;
+    left: 66px;
+    font-size: 140px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+  .name span { display: block; }
+  .trace {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 410px;
+    width: 1200px;
+    height: 140px;
+    display: block;
+  }
+  .trace-ghost { fill: none; stroke: var(--line-strong); stroke-width: 1; }
+  .trace-line { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+  .trace-node { fill: var(--canvas); stroke: var(--accent); stroke-width: 2.5; }
+  .trace-node-solid { fill: var(--accent); }
+  .trace-label { fill: var(--faint); font-family: "JetBrains Mono", monospace; font-size: 15px; letter-spacing: 0.1em; }
+  .bottom {
+    position: absolute;
+    left: 72px;
+    right: 72px;
+    bottom: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .tagline {
+    font-size: 27px;
+    font-weight: 500;
+    color: var(--body);
+    letter-spacing: -0.005em;
+  }
+  .tagline b { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="eyebrow mono"><span class="dot"></span>Full-stack engineer · 45.2671° N, 19.8335° E</div>
+    <div class="mono">aleksandar-novakovic.dev</div>
+  </div>
+
+  <h1 class="name"><span>Aleksandar</span><span>Novakovic</span></h1>
+
+  <svg class="trace" viewBox="0 0 1200 140" aria-hidden="true">
+    <path class="trace-ghost" d="M-10 110H200V70H430V110H640V44H860V84H1210" />
+    <path class="trace-line" d="M-10 70H125V110H350V44H580V84H800V110H1010V70H1210" />
+    <rect class="trace-node" x="120" y="65" width="10" height="10" />
+    <rect class="trace-node" x="345" y="105" width="10" height="10" />
+    <rect class="trace-node trace-node-solid" x="575" y="39" width="10" height="10" />
+    <rect class="trace-node" x="795" y="79" width="10" height="10" />
+    <rect class="trace-node" x="1005" y="105" width="10" height="10" />
+    <text class="trace-label" x="126" y="52">UI</text>
+    <text class="trace-label" x="581" y="28">API</text>
+    <text class="trace-label" x="1022" y="118">DATA</text>
+  </svg>
+
+  <div class="bottom">
+    <div class="tagline">Production systems in <b>TypeScript</b> and <b>C#/.NET</b> · industrial software, banking, e-health</div>
+  </div>
+</body>
+</html>
