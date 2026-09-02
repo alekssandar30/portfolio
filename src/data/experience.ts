@@ -12,7 +12,7 @@ export const experienceHighlights = [
   {
     label: "Independent B2B work",
     summary:
-      "Contracting through mBIT Solutions for project-based and longer-term software engineering engagements.",
+      "Contracting through my agency mBIT Solutions for project-based and longer-term software engineering engagements.",
   },
   {
     label: "Modern engineering workflow",
