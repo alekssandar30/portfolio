@@ -9,3 +9,4 @@ node_modules/
 CODING_AGENT_PROMPT.md
 PORTFOLIO_BRIEF.md
 .wayfinder/
+.wrangler/
