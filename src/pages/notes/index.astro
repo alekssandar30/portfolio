@@ -76,6 +76,7 @@ const notes = (await getCollection("notes")).filter(
     max-width: 20ch;
     margin-top: 1.5rem;
     font-size: clamp(2rem, 5.4vw, 3.75rem);
+    overflow-wrap: anywhere;
   }
 
   .page-lede {
@@ -117,6 +118,7 @@ const notes = (await getCollection("notes")).filter(
     font-weight: 700;
     letter-spacing: -0.01em;
     line-height: 1.15;
+    overflow-wrap: anywhere;
     transition: color 160ms var(--ease-out);
   }
 
