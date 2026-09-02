@@ -1,6 +1,6 @@
 # Aleksandar Novakovic Portfolio
 
-Static-first personal portfolio for Aleksandar Novakovic, full-stack software engineer and independent B2B contractor through mBIT Solutions.
+Static-first personal portfolio for Aleksandar Novakovic, full-stack software engineer and independent B2B contractor through his agency mBIT Solutions.
 
 ## Architecture
 
