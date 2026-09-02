@@ -4,7 +4,7 @@ subtitle: "Industrial operations platform"
 industry: "Industrial / Construction Software"
 visibility: "public"
 featured: true
-summary: "Operations platform for Zaunergroup, an Austrian industrial plant construction group: piping and weld records, NDT, material deliveries, a supplier portal and an offline-capable field app. Largest single contributor to both the .NET backend and the Angular frontend since 2022."
+summary: "Operations platform for Zaunergroup, an Austrian industrial plant construction group: piping and weld records, NDT, material deliveries, a supplier portal and an offline-capable field app."
 role: "Full-stack software engineer"
 client: "Zaunergroup"
 location: "Austria"
@@ -25,14 +25,13 @@ responsibilities:
   - The AG Grid platform 35 screens migrated onto, plus the weld-log, equipment, IWP, P&ID and issue modules
   - Architecture decision records governing the Angular-to-React re-platform, built with two colleagues
 outcomes:
-  - Vendor portal in production - suppliers submit deliveries and EN 10204 material certificates directly, reviewed per position by Zaunergroup staff
-  - Field crews log welds, photos and inspections offline against a sync API of roughly 45 endpoints
-  - Around half of the backend application code and of the frontend commits over four years, 57 of 138 schema migrations, most of the backend test suite
+  - Vendor portal - suppliers submit deliveries and EN 10204 material certificates directly, reviewed per position by Zaunergroup staff
+  - Field crews log welds, photos and inspections offline against a sync APIW
 ---
 
 An industrial plant construction project produces a relentless paper trail: thousands of deliveries with line items and material certificates, welds that each need documented non-destructive testing, isometric drawings that get revised, printed, annotated and scanned back. LineTracker is Zaunergroup's system of record for all of it, from the moment material arrives on site to the moment a system is handed over.
 
-I have worked on it since February 2022, across the .NET backend, the Angular application in production, and the React successor a small team of us is building.
+I am working on it since February 2022, across the .NET backend, the Angular application in production, and the React successor a small team of us is building.
 
 ## Where I own the design
 

@@ -34,7 +34,8 @@
   --on-accent: #0d110d;
   --font-sans: Archivo, "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --text-display: clamp(3rem, 9.7vw, 8.75rem);
+  /* no rem floor below 48rem: Android font scaling must not push the name past the viewport */
+  --text-display: min(11.3vw, 8.75rem);
   --radius: 3px;
   --gutter: clamp(1.25rem, 3.4vw, 3rem);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -84,6 +85,11 @@ h1,
 h2,
 h3 {
   margin: 0;
+}
+
+/* clip, not hidden: keeps sticky descendants working while ruling out horizontal page scroll */
+main {
+  overflow-x: clip;
 }
 
 p {
@@ -290,6 +296,10 @@ h3 {
 }
 
 @media (min-width: 48rem) {
+  :root {
+    --text-display: clamp(3rem, 9.7vw, 8.75rem);
+  }
+
   .container-shell {
     width: min(calc(100% - 4rem), 74rem);
   }

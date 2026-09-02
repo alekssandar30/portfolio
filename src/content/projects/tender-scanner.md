@@ -3,7 +3,7 @@ title: "TenderScanner"
 subtitle: "AI procurement intelligence platform"
 industry: "Procurement Technology / AI"
 visibility: "public"
-featured: false
+featured: true
 summary: "My own SaaS product: scrapers ingest public tenders across Serbia and Bosnia and Herzegovina, and an AI pipeline summarizes, embeds and scores each one against company profiles to produce go/no-go recommendations."
 role: "Founder / solo engineer"
 technologies:
