@@ -21,6 +21,7 @@ const pageTitle = title.includes("Aleksandar")
   ? title
   : `${title} | Aleksandar Novakovic`;
 const imageUrl = new URL(siteConfig.ogImage, site).toString();
+const imageAlt = `${siteConfig.shortName} - Full-stack engineer. Production systems in TypeScript and C#/.NET.`;
 const jsonLd = Astro.props.jsonLd;
 ---
 
@@ -32,7 +33,10 @@ const jsonLd = Astro.props.jsonLd;
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0d110d" />
     <link
       rel="preload"
       href="/fonts/archivo-latin-wght.woff2"
@@ -42,14 +46,20 @@ const jsonLd = Astro.props.jsonLd;
     />
     <meta name="robots" content="index, follow" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteConfig.shortName} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     {
       jsonLd && (
         <script
