@@ -3,34 +3,33 @@ interface Props {
   eyebrow: string;
   title: string;
   text?: string;
+  class?: string;
 }
+
+const { eyebrow, title, text, class: className } = Astro.props;
 ---
 
-<header class="section-intro">
-  <p class="eyebrow">{Astro.props.eyebrow}</p>
-  <h2>{Astro.props.title}</h2>
-  {Astro.props.text && <p class="section-description">{Astro.props.text}</p>}
+<header class:list={["section-intro", className]}>
+  <p class="annotation">{eyebrow}</p>
+  <h2 class="display-heading">{title}</h2>
+  {text && <p class="section-description">{text}</p>}
 </header>
 
 <style>
   .section-intro {
-    max-width: 44rem;
     margin-bottom: 3rem;
   }
 
   h2 {
-    max-width: 16ch;
-    margin-top: 0.75rem;
-    font-size: 2rem;
-    font-weight: 620;
-    letter-spacing: 0;
-    line-height: 1.08;
+    max-width: 22ch;
+    margin-top: 1.5rem;
+    font-size: clamp(1.75rem, 4.2vw, 3rem);
   }
 
   .section-description {
-    max-width: 60ch;
+    max-width: 58ch;
     margin-top: 1.25rem;
-    color: var(--muted);
+    color: var(--body);
     font-size: 1.0625rem;
     line-height: 1.7;
   }
@@ -38,10 +37,6 @@ interface Props {
   @media (min-width: 48rem) {
     .section-intro {
       margin-bottom: 4rem;
-    }
-
-    h2 {
-      font-size: 2.5rem;
     }
   }
 </style>

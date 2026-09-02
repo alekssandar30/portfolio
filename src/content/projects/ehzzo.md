@@ -4,16 +4,18 @@ subtitle: "National e-health platform"
 industry: "Healthcare"
 visibility: "public"
 featured: true
-summary: "Development work on a large healthcare software system supporting Croatia's national health infrastructure."
-role: "Software developer"
+summary: "Backend engineering on a large healthcare system supporting Croatia's national health-insurance infrastructure - .NET services, background processing of large files, import/export pipelines."
+role: "Software engineer"
 technologies:
-  - Enterprise software
+  - C#
+  - .NET
+  - PostgreSQL
 responsibilities:
-  - Contributed as part of an engineering organization working on an established large-scale production application
-needsVerification:
-  - Confirm exact contribution scope before adding module or workflow detail.
+  - Backend services in .NET over a PostgreSQL database
+  - Background jobs analyzing large files
+  - Import/export pipelines and API endpoints
 ---
 
-eHZZO represents contribution to a large established healthcare software system in Croatia.
+eHZZO is part of Croatia's national health-insurance infrastructure - a system whose scale and stakes are set by the country it serves, not by any single team. The public description here stays deliberately high-level.
 
-The current public description stays high-level: production engineering inside a serious national e-health context, delivered as part of a larger engineering organization.
+My work on it was backend engineering as part of a larger engineering organization: .NET services over a PostgreSQL database, background jobs that analyze large files, import and export pipelines, and the API endpoints that expose them. Unglamorous on paper, but this is the kind of system where a background job that processes files correctly - every time, at national volume - is exactly what production engineering means.

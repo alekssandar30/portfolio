@@ -1,20 +1,33 @@
 ---
 import { person } from "@/data/person";
+
+const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div
-    class="container-shell flex flex-col gap-8 md:flex-row md:items-end md:justify-between"
-  >
-    <div>
-      <p class="footer-name">{person.name}</p>
-      <p class="footer-copy">{person.title} through {person.company}</p>
+  <div class="shell-bleed">
+    <div class="footer-main">
+      <div>
+        <p class="footer-name">{person.name}</p>
+        <p class="footer-copy annotation">
+          {person.title} · {person.company}
+        </p>
+      </div>
+      <div class="footer-nav" aria-label="Footer navigation">
+        <a href="/work">Work</a>
+        <a href="/about">About</a>
+        <a href="/notes">Notes</a>
+        <a href="/contact">Contact</a>
+      </div>
     </div>
-    <div class="footer-nav" aria-label="Footer navigation">
-      <a href="/work">Work</a>
-      <a href="/about">About</a>
-      <a href="/notes">Notes</a>
-      <a href="/contact">Contact</a>
+    <div class="footer-nav footer-social">
+      <a href={person.emailHref}>{person.emailLabel}</a>
+      <a href={person.links.linkedin} rel="noreferrer">LinkedIn ↗</a>
+      <a href={person.links.github} rel="noreferrer">GitHub ↗</a>
+    </div>
+    <div class="footer-meta">
+      <span>© {year} - {person.location}</span>
+      <span>45.2671° N, 19.8335° E</span>
     </div>
   </div>
 </footer>
@@ -22,19 +35,25 @@ import { person } from "@/data/person";
 <style>
   .site-footer {
     border-top: 1px solid var(--line);
-    background: var(--surface);
-    padding-block: 2.5rem;
+    background: var(--canvas);
+    padding-block: 3rem 1.5rem;
+  }
+
+  .footer-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
   .footer-name {
-    font-size: 0.9375rem;
-    font-weight: 700;
+    font-size: 1.0625rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
   }
 
   .footer-copy {
-    margin-top: 0.25rem;
-    color: var(--muted);
-    font-size: 0.875rem;
+    margin-top: 0.5rem;
   }
 
   .footer-nav {
@@ -48,11 +67,46 @@ import { person } from "@/data/person";
     min-height: 2.75rem;
     align-items: center;
     color: var(--muted);
-    font-size: 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     transition: color 160ms var(--ease-out);
   }
 
   .footer-nav a:hover {
-    color: var(--signal-strong);
+    color: var(--accent);
+  }
+
+  .footer-social {
+    margin-top: 1.5rem;
+    text-transform: none;
+  }
+
+  .footer-social a {
+    text-transform: none;
+  }
+
+  .footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--line);
+    padding-top: 1.25rem;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 48rem) {
+    .footer-main {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
   }
 </style>

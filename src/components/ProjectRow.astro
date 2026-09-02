@@ -1,0 +1,139 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  class?: string;
+}
+
+const { project, class: className } = Astro.props;
+const technologies = project.data.technologies.slice(0, 3).join(" · ");
+---
+
+<a
+  class:list={["project-row", className]}
+  href={`/work/${project.slug}`}
+>
+  <span class="row-main">
+    <span
+      class="row-title"
+      transition:name={`project-title-${project.slug}`}
+    >
+      {project.data.title}
+    </span>
+    <span class="row-summary">{project.data.summary}</span>
+  </span>
+  <span class="row-industry">{project.data.industry}</span>
+  <span class="row-tech">{technologies}</span>
+  <span class="row-arrow" aria-hidden="true">→</span>
+</a>
+
+<style>
+  .project-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 2rem;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    border-top: 1px solid var(--line-strong);
+    transition:
+      background-color 180ms var(--ease-out),
+      color 180ms var(--ease-out);
+  }
+
+  .project-row:last-of-type {
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .row-title {
+    display: block;
+    color: var(--ink);
+    font-size: clamp(1.5rem, 3.2vw, 2.375rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    text-transform: uppercase;
+    transition: color 180ms var(--ease-out);
+  }
+
+  .row-summary {
+    display: block;
+    max-width: 58ch;
+    margin-top: 0.6rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    transition: color 180ms var(--ease-out);
+  }
+
+  .row-industry,
+  .row-tech {
+    display: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+    transition: color 180ms var(--ease-out);
+  }
+
+  .row-tech {
+    text-transform: none;
+  }
+
+  .row-arrow {
+    justify-self: end;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 180ms var(--ease-out),
+      color 180ms var(--ease-out);
+  }
+
+  .project-row:hover,
+  .project-row:focus-visible {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  /* the accent outline would vanish on the inverted row */
+  .project-row:focus-visible {
+    outline-color: var(--on-accent);
+    outline-offset: -3px;
+  }
+
+  .project-row:hover :is(.row-title, .row-industry, .row-tech),
+  .project-row:focus-visible :is(.row-title, .row-industry, .row-tech) {
+    color: var(--on-accent);
+  }
+
+  .project-row:hover .row-summary,
+  .project-row:focus-visible .row-summary {
+    color: rgba(13, 17, 13, 0.72);
+  }
+
+  .project-row:hover .row-arrow,
+  .project-row:focus-visible .row-arrow {
+    color: var(--on-accent);
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (min-width: 48rem) {
+    .project-row {
+      grid-template-columns: minmax(0, 1fr) 11rem 12rem 2.5rem;
+      gap: 1.5rem;
+      padding: 1.75rem 1.25rem;
+    }
+
+    .row-industry,
+    .row-tech {
+      display: block;
+    }
+  }
+</style>

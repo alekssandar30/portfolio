@@ -8,3 +8,4 @@ node_modules/
 .DS_Store
 CODING_AGENT_PROMPT.md
 PORTFOLIO_BRIEF.md
+.wayfinder/

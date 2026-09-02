@@ -5,11 +5,11 @@ export const person = {
   company: "mBIT Solutions",
   positioning:
     "TypeScript, C#/.NET, production web systems and AI-native engineering.",
-  emailLabel: "",
-  emailHref: "",
+  emailLabel: "sale.novakovic97@gmail.com",
+  emailHref: "mailto:sale.novakovic97@gmail.com",
   links: {
-    linkedin: "",
-    github: "",
+    linkedin: "https://www.linkedin.com/in/aleksandar-novak",
+    github: "https://github.com/alekssandar30",
   },
   languages: [
     { name: "Serbian", level: "Native / bilingual" },

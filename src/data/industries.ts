@@ -1,7 +1,11 @@
 export const industries = [
   {
     name: "Industrial / Construction Software",
-    projects: ["LineTracker", "Transkop"],
+    projects: ["LineTracker"],
+  },
+  {
+    name: "Transport & Logistics",
+    projects: ["Transkop"],
   },
   {
     name: "Banking",
@@ -12,7 +16,7 @@ export const industries = [
     projects: ["TenderScanner"],
   },
   {
-    name: "Finance",
+    name: "Fintech / Payments",
     projects: ["Finrelay"],
   },
   {
@@ -20,11 +24,11 @@ export const industries = [
     projects: ["eHZZO"],
   },
   {
-    name: "Marketing Technology",
+    name: "Podcast / Media Technology",
     projects: ["Swap.fm"],
   },
   {
     name: "Startups / Product Engineering",
-    projects: ["Swap.fm", "MAL.AI"],
+    projects: ["Swap.fm"],
   },
 ] as const;

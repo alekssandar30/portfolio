@@ -1,5 +1,4 @@
 ---
-import SectionIntro from "@/components/SectionIntro.astro";
 import { person } from "@/data/person";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
@@ -11,40 +10,53 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 >
   <section class="page-section">
     <div class="container-shell">
-      <SectionIntro
-        eyebrow="Contact"
-        title="Available for B2B software engineering engagements."
-        text="Frontend, backend, full-stack product work, architecture and modernization."
-      />
-      <dl class="contact-list">
+      <header class="page-head">
+        <p class="annotation contact-status">
+          <span class="dot" aria-hidden="true"></span>
+          Available for new engagements
+        </p>
+        <h1 class="display-heading">Start a conversation.</h1>
+        <p class="page-lede">
+          Frontend, backend, full-stack product work, architecture and
+          modernization - as an independent B2B contractor joining your
+          product or engineering team.
+        </p>
+      </header>
+
+      {
+        person.emailLabel && (
+          <a class="contact-email" href={person.emailHref}>
+            {person.emailLabel}
+            <span class="link-arrow" aria-hidden="true">
+              →
+            </span>
+          </a>
+        )
+      }
+
+      <dl class="contact-meta">
         <div>
-          <dt>Location</dt>
-          <dd>{person.location}</dd>
+          <dt class="trace-annotation">Location</dt>
+          <dd>{person.location} - working with companies across Europe</dd>
         </div>
         <div>
-          <dt>Engagement</dt>
+          <dt class="trace-annotation">Engagement</dt>
           <dd>Independent B2B contractor through {person.company}</dd>
         </div>
         {
-          person.emailLabel && (
-            <div>
-              <dt>Email</dt>
-              <dd>
-                <a href={person.emailHref}>{person.emailLabel}</a>
-              </dd>
-            </div>
-          )
-        }
-        {
           (person.links.linkedin || person.links.github) && (
             <div>
-              <dt>Profiles</dt>
+              <dt class="trace-annotation">Elsewhere</dt>
               <dd class="profile-links">
                 {person.links.linkedin && (
-                  <a href={person.links.linkedin}>LinkedIn</a>
+                  <a href={person.links.linkedin} rel="noreferrer">
+                    LinkedIn <span aria-hidden="true">↗</span>
+                  </a>
                 )}
                 {person.links.github && (
-                  <a href={person.links.github}>GitHub</a>
+                  <a href={person.links.github} rel="noreferrer">
+                    GitHub <span aria-hidden="true">↗</span>
+                  </a>
                 )}
               </dd>
             </div>
@@ -58,55 +70,123 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 <style>
   .page-section {
     min-height: 70vh;
-    padding-block: 5rem 8rem;
+    padding-block: 4rem 8rem;
   }
 
-  .contact-list {
-    display: grid;
-    gap: 2rem;
+  .page-head {
+    margin-bottom: 3.5rem;
   }
 
-  .contact-list > div {
-    display: grid;
+  .contact-status {
+    display: flex;
+    align-items: center;
     gap: 0.75rem;
   }
 
-  dt {
-    color: var(--signal-strong);
-    font-size: 0.875rem;
-    font-weight: 650;
+  .dot {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--accent);
+  }
+
+  h1 {
+    margin-top: 1.5rem;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+  }
+
+  .page-lede {
+    max-width: 54ch;
+    margin-top: 1.5rem;
+    color: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .contact-email {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    color: var(--accent);
+    font-size: clamp(1.25rem, 4vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
+    transition: color 160ms var(--ease-out);
+  }
+
+  .contact-email:hover {
+    color: var(--ink);
+  }
+
+  .contact-meta {
+    display: grid;
+    gap: 0;
+    margin: 3.5rem 0 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .contact-meta > div {
+    border-bottom: 1px solid var(--line);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .contact-meta > div:last-child {
+    border-bottom: 0;
   }
 
   dd {
-    max-width: 44rem;
-    margin: 0;
-    color: var(--muted);
-    font-size: 1.125rem;
-  }
-
-  dd a {
-    color: var(--ink);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    margin: 0.5rem 0 0;
+    color: var(--body);
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
 
   .profile-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
+  }
+
+  .profile-links a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--ink);
+    font-weight: 700;
+    transition: color 160ms var(--ease-out);
+  }
+
+  .profile-links a:hover {
+    color: var(--accent);
   }
 
   @media (min-width: 48rem) {
     .page-section {
-      padding-block: 8rem 12rem;
+      padding-block: 6rem 12rem;
     }
 
-    .contact-list > div {
-      grid-template-columns: 12rem minmax(0, 1fr);
-      gap: 2rem;
+    .page-head {
+      margin-bottom: 4.5rem;
     }
 
-    dd {
-      font-size: 1.25rem;
+    .contact-meta {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 4.5rem;
+    }
+
+    .contact-meta > div {
+      border-right: 1px solid var(--line);
+      border-bottom: 0;
+    }
+
+    .contact-meta > div:last-child {
+      border-right: 0;
     }
   }
 </style>

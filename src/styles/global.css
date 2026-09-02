@@ -2,18 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/archivo-latin-wght.woff2") format("woff2-variations");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin-wght.woff2")
+    format("woff2-variations");
+}
+
 :root {
   color-scheme: dark;
-  --canvas: oklch(15.5% 0.012 150);
-  --surface: oklch(19.5% 0.016 150);
-  --ink: oklch(94% 0.009 145);
-  --muted: oklch(71% 0.012 145);
-  --faint: oklch(56% 0.01 145);
-  --line: oklch(94% 0.009 145 / 0.09);
-  --line-strong: oklch(94% 0.009 145 / 0.18);
-  --signal: oklch(70% 0.105 154);
-  --signal-strong: oklch(80% 0.08 154);
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --canvas: #0d110d;
+  --surface: #131813;
+  --ink: #edf2ea;
+  --body: #b6bfb3;
+  --muted: #97a295;
+  --faint: #5d675c;
+  --line: rgba(237, 242, 234, 0.12);
+  --line-strong: rgba(237, 242, 234, 0.14);
+  --grid-line: rgba(237, 242, 234, 0.035);
+  --accent: #d7f755;
+  --on-accent: #0d110d;
+  --font-sans: Archivo, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --text-display: clamp(3rem, 9.7vw, 8.75rem);
+  --radius: 3px;
+  --gutter: clamp(1.25rem, 3.4vw, 3rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --space-xs: 0.5rem;
   --space-sm: 0.75rem;
   --space-md: 1.25rem;
@@ -35,15 +59,13 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background: var(--canvas);
+  background-color: var(--canvas);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
   color: var(--ink);
-  font-family:
-    Inter,
-    ui-sans-serif,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.5;
 }
 
@@ -75,11 +97,12 @@ h3 {
 }
 
 ::selection {
-  background: oklch(70% 0.105 154 / 0.3);
+  background: rgba(215, 247, 85, 0.35);
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--signal);
+  outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
 
@@ -100,6 +123,10 @@ h3 {
     margin-inline: auto;
   }
 
+  .shell-bleed {
+    padding-inline: var(--gutter);
+  }
+
   .section-pad {
     padding-block: var(--space-2xl);
   }
@@ -108,33 +135,51 @@ h3 {
     background: var(--surface);
   }
 
+  .display-heading {
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .annotation {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
   .system-trace {
     --trace-structure: var(--line-strong);
     --trace-subtle: var(--line);
-    --trace-active: var(--signal);
+    --trace-active: var(--accent);
     --trace-label: var(--muted);
   }
 
   .trace-surface {
     border: 1px solid var(--line);
-    border-radius: 4px;
+    border-radius: var(--radius);
     background: var(--canvas);
   }
 
   .trace-annotation {
     color: var(--faint);
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-family: var(--font-mono);
     font-size: 0.6875rem;
-    letter-spacing: 0;
+    letter-spacing: 0.08em;
     line-height: 1.4;
     text-transform: uppercase;
   }
 
   .eyebrow {
-    color: var(--signal);
-    font-size: 0.875rem;
-    font-weight: 650;
-    letter-spacing: 0;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   .muted {
@@ -146,16 +191,16 @@ h3 {
     min-height: 2.75rem;
     align-items: center;
     gap: 0.5rem;
-    color: var(--signal-strong);
+    color: var(--accent);
     font-size: 0.9375rem;
-    font-weight: 650;
+    font-weight: 700;
     transition:
       color 160ms var(--ease-out),
       transform 160ms var(--ease-out);
   }
 
   .text-link:hover {
-    color: var(--signal);
+    color: var(--ink);
   }
 
   .text-link:active {
@@ -164,14 +209,16 @@ h3 {
 
   .action {
     display: inline-flex;
-    min-height: 2.875rem;
+    min-height: 3.25rem;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--ink);
-    border-radius: 4px;
-    padding: 0.65rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    padding: 0.65rem 1.75rem;
     font-size: 0.9375rem;
-    font-weight: 650;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     transition:
       background-color 160ms var(--ease-out),
       border-color 160ms var(--ease-out),
@@ -180,19 +227,23 @@ h3 {
   }
 
   .action-primary {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .action-primary:hover {
     background: var(--ink);
-    color: var(--canvas);
   }
 
   .action-secondary {
+    border-color: rgba(237, 242, 234, 0.3);
     background: transparent;
     color: var(--ink);
   }
 
-  .action:hover {
-    border-color: var(--signal);
-    background: var(--signal);
-    color: var(--canvas);
+  .action-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   .action:active {
@@ -204,17 +255,19 @@ h3 {
     min-height: 2.75rem;
     align-items: center;
     color: var(--muted);
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     transition: color 160ms var(--ease-out);
   }
 
   .back-link:hover {
-    color: var(--signal-strong);
+    color: var(--accent);
   }
 
   .prose {
-    color: var(--muted);
+    color: var(--body);
   }
 
   .prose :where(h2, h3) {
@@ -222,13 +275,13 @@ h3 {
   }
 
   .prose :where(a) {
-    color: var(--signal-strong);
+    color: var(--accent);
     text-decoration: underline;
     text-underline-offset: 0.2em;
   }
 
   .prose :where(p, li) {
-    color: var(--muted);
+    color: var(--body);
   }
 
   .prose :where(strong) {
@@ -256,4 +309,60 @@ h3 {
 .link-arrow {
   display: inline-block;
   transition: transform 160ms var(--ease-out);
+}
+
+/* Motion layer (wayfinder ticket 07). Hidden states apply only when JS is
+   present (html.js) and motion is allowed, so content never disappears for
+   no-JS or reduced-motion visitors. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  html.js .reveal.in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 480ms var(--ease-out),
+      transform 480ms var(--ease-out);
+  }
+
+  html.js .reveal.in.reveal-d1 {
+    transition-delay: 70ms;
+  }
+
+  html.js .reveal.in.reveal-d2 {
+    transition-delay: 140ms;
+  }
+
+  html.js .kw-scan {
+    background: linear-gradient(
+      100deg,
+      var(--ink) 40%,
+      var(--accent) 50%,
+      var(--ink) 60%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-position: 100% 0;
+    background-size: 250% 100%;
+    color: transparent;
+  }
+
+  html.js .go .kw-scan {
+    animation: kw-scan 1100ms var(--ease-out) var(--kd, 0ms) forwards;
+  }
+
+  @keyframes kw-scan {
+    to {
+      background-position: 0% 0;
+    }
+  }
+}
+
+.kw-scan {
+  color: var(--ink);
+  font-weight: 600;
+  white-space: nowrap;
 }

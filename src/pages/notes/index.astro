@@ -1,5 +1,4 @@
 ---
-import SectionIntro from "@/components/SectionIntro.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
@@ -15,27 +14,37 @@ const notes = (await getCollection("notes")).filter(
 >
   <section class="page-section">
     <div class="container-shell">
-      <SectionIntro
-        eyebrow="Notes"
-        title="Notes on software systems and engineering workflow."
-        text="TypeScript, .NET, architecture, modernization and AI-native software delivery."
-      />
+      <header class="page-head">
+        <div class="head-rule">
+          <p class="annotation">Notes</p>
+          <p class="annotation head-meta">
+            {String(notes.length).padStart(2, "0")} published
+          </p>
+        </div>
+        <h1 class="display-heading">
+          Notes on software systems and engineering workflow.
+        </h1>
+        <p class="page-lede">
+          TypeScript, .NET, architecture, modernization and AI-native software
+          delivery.
+        </p>
+      </header>
       <div class="notes-list">
         {
-          notes.map((note) => (
-            <article>
-              <a href={`/notes/${note.slug}`}>
-                <p class="note-topic">{note.data.topics[0] ?? "Engineering"}</p>
-                <h2>{note.data.title}</h2>
-                <p class="note-description">{note.data.description}</p>
-                <span>
-                  Read note{" "}
-                  <span class="link-arrow" aria-hidden="true">
-                    →
-                  </span>
+          notes.map((note, index) => (
+            <a class="note-row" href={`/notes/${note.slug}`}>
+              <span class="note-index">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="note-main">
+                <span class="annotation note-topic">
+                  {note.data.topics[0] ?? "Engineering"}
                 </span>
-              </a>
-            </article>
+                <h2>{note.data.title}</h2>
+                <span class="note-description">{note.data.description}</span>
+              </span>
+              <span class="note-arrow" aria-hidden="true">→</span>
+            </a>
           ))
         }
       </div>
@@ -46,65 +55,117 @@ const notes = (await getCollection("notes")).filter(
 <style>
   .page-section {
     min-height: 70vh;
-    padding-block: 5rem 8rem;
+    padding-block: 4rem 8rem;
   }
 
-  .notes-list {
+  .page-head {
+    margin-bottom: 3rem;
+  }
+
+  .head-rule {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .head-meta {
+    color: var(--faint);
+  }
+
+  h1 {
+    max-width: 20ch;
+    margin-top: 1.5rem;
+    font-size: clamp(2rem, 5.4vw, 3.75rem);
+  }
+
+  .page-lede {
+    max-width: 58ch;
+    margin-top: 1.5rem;
+    color: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .note-row {
     display: grid;
-    gap: 1.5rem;
+    grid-template-columns: 2.5rem minmax(0, 1fr) 2rem;
+    gap: 1rem;
+    align-items: start;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--line-strong);
   }
 
-  article a {
-    display: block;
-    padding-block: 2rem;
+  .note-row:last-child {
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .note-index {
+    padding-top: 0.35rem;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
   }
 
   .note-topic {
-    color: var(--signal-strong);
-    font-size: 0.8125rem;
-    font-weight: 650;
+    color: var(--accent);
   }
 
   h2 {
-    max-width: 24ch;
+    max-width: 28ch;
     margin-top: 0.75rem;
-    font-size: 1.75rem;
-    font-weight: 620;
-    letter-spacing: 0;
+    font-size: clamp(1.375rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
     line-height: 1.15;
     transition: color 160ms var(--ease-out);
   }
 
   .note-description {
+    display: block;
     max-width: 60ch;
-    margin-top: 1rem;
+    margin-top: 0.85rem;
     color: var(--muted);
+    font-size: 0.9375rem;
     line-height: 1.65;
   }
 
-  article a > span {
-    display: inline-block;
-    margin-top: 1.5rem;
-    color: var(--signal-strong);
-    font-size: 0.875rem;
-    font-weight: 650;
+  .note-arrow {
+    justify-self: end;
+    padding-top: 0.35rem;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 180ms var(--ease-out);
   }
 
-  article a:hover h2 {
-    color: var(--signal-strong);
+  .note-row:hover h2,
+  .note-row:focus-visible h2 {
+    color: var(--accent);
+  }
+
+  .note-row:hover .note-arrow,
+  .note-row:focus-visible .note-arrow {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   @media (min-width: 48rem) {
     .page-section {
-      padding-block: 8rem 12rem;
+      padding-block: 6rem 12rem;
     }
 
-    article a {
-      padding-block: 2.25rem;
+    .page-head {
+      margin-bottom: 4.5rem;
     }
 
-    h2 {
-      font-size: 2.25rem;
+    .note-row {
+      grid-template-columns: 3.5rem minmax(0, 1fr) 2.5rem;
+      gap: 1.5rem;
+      padding: 2.5rem 1.25rem;
     }
   }
 </style>
