@@ -1,105 +1,141 @@
 ---
-import EditorialProject from "@/components/EditorialProject.astro";
 import EngineeringSystem from "@/components/EngineeringSystem.astro";
 import ExperienceTimeline from "@/components/ExperienceTimeline.astro";
-import FeaturedProject from "@/components/FeaturedProject.astro";
+import ProjectRow from "@/components/ProjectRow.astro";
 import SectionIntro from "@/components/SectionIntro.astro";
 import TechStack from "@/components/TechStack.astro";
 import { person } from "@/data/person";
+import { projectIndex } from "@/data/projects";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { personSchema, professionalServiceSchema } from "@/lib/schema";
 import { siteConfig } from "@/lib/site";
 import { getCollection } from "astro:content";
 
-const projectOrder = ["linetracker", "ehzzo", "nct", "swap-fm"];
 const projects = (await getCollection("projects"))
   .filter((project) => project.data.featured)
-  .sort((a, b) => projectOrder.indexOf(a.slug) - projectOrder.indexOf(b.slug));
-const [featuredProject, ...otherProjects] = projects;
+  .sort((a, b) => projectIndex(a.slug) - projectIndex(b.slug));
 const siteUrl = Astro.site?.toString() ?? siteConfig.url;
 ---
 
 <BaseLayout
   jsonLd={[personSchema(siteUrl), professionalServiceSchema(siteUrl)]}
 >
-  <section class="intro">
-    <div class="container-shell">
-      <p class="hero-context">
-        <span aria-hidden="true">·</span> Novi
-        Sad, Serbia
+  <section class="hero" aria-label="Introduction">
+    <div class="shell-bleed">
+      <p class="hero-eyebrow annotation">
+        <span class="dot" aria-hidden="true"></span>
+        Full-stack engineer · 45.2671° N, 19.8335° E
       </p>
-      <h1>Aleksandar <span>Novakovic.</span></h1>
-      <div class="hero-copy">
-        <p class="hero-description">
-          I build production software across frontend and backend, specializing
-          in TypeScript and C#/.NET for enterprise applications, platforms and
-          digital products.
-        </p>
-        <div class="hero-actions">
-          <a href="/work" class="action action-primary">Explore my work</a>
-          <a href="/contact" class="action action-secondary">Work with me</a>
-        </div>
+      <h1 class="hero-name display-heading">
+        <span class="hero-line"><span>Aleksandar</span></span>
+        <span class="hero-line"><span>Novakovic</span></span>
+      </h1>
+    </div>
+
+    <svg
+      class="hero-trace"
+      viewBox="0 0 1440 190"
+      aria-hidden="true"
+    >
+      <path
+        class="trace-ghost"
+        d="M-10 150H240V96H520V150H760V60H1030V116H1450"
+      ></path>
+      <path
+        class="trace-line"
+        pathLength="1"
+        d="M-10 96H150V150H420V60H700V116H960V150H1220V96H1450"
+      ></path>
+      <rect class="trace-node" x="146" y="92" width="8" height="8"></rect>
+      <rect class="trace-node" x="416" y="146" width="8" height="8"></rect>
+      <rect class="trace-node trace-node-solid" x="696" y="56" width="8" height="8"></rect>
+      <rect class="trace-node" x="956" y="112" width="8" height="8"></rect>
+      <rect class="trace-node" x="1216" y="146" width="8" height="8"></rect>
+      <text class="trace-label" x="150" y="80">UI</text>
+      <text class="trace-label" x="700" y="44">API</text>
+      <text class="trace-label" x="1220" y="180">DATA</text>
+    </svg>
+
+    <div class="hero-meta shell-bleed">
+      <p class="hero-desc kw-group">
+        Production systems in
+        <span class="kw-scan" style="--kd: 1400ms">TypeScript</span> and
+        <span class="kw-scan" style="--kd: 1580ms">C#/.NET</span> - industrial
+        software, banking and e-health, built to survive contact with reality.
+      </p>
+      <div class="hero-actions">
+        <a href="/work" class="action action-primary">Explore work</a>
+        <a href="/contact" class="action action-secondary">Contact</a>
       </div>
     </div>
   </section>
 
-  <section class="section-pad" id="selected-work">
+  <section class="section-pad home-section" id="selected-work">
     <div class="container-shell">
       <SectionIntro
+        class="reveal"
         eyebrow="Selected work"
         title="Production systems in complex domains."
         text="A selection of public and responsibly anonymized engineering work across industrial software, banking, healthcare and product teams."
       />
-      {featuredProject && <FeaturedProject project={featuredProject} index={0} />}
-      <div>
+      <div class="project-index">
         {
-          otherProjects.map((project, index) => (
-            <EditorialProject project={project} index={index + 1} />
+          projects.map((project) => (
+            <ProjectRow project={project} class="reveal" />
           ))
         }
       </div>
-      <a class="text-link section-link" href="/work">
+      <a class="text-link section-link reveal" href="/work">
         View all work <span class="link-arrow" aria-hidden="true">→</span>
       </a>
     </div>
   </section>
 
-  <section class="section-pad surface-band" id="engineering-system">
+  <section class="section-pad surface-band home-section" id="engineering-system">
     <div class="container-shell">
       <SectionIntro
+        class="reveal"
         eyebrow="Capabilities"
         title="Engineering across the product stack."
         text="The useful work often happens between layers: application behavior, APIs, data, permissions and production constraints shape one another."
       />
-      <EngineeringSystem />
+      <div class="reveal reveal-d1">
+        <EngineeringSystem />
+      </div>
     </div>
   </section>
 
-  <section class="section-pad">
+  <section class="section-pad home-section">
     <div class="container-shell split-layout">
       <SectionIntro
+        class="reveal"
         eyebrow="Experience"
         title="Different domains, serious constraints."
         text="More than seven years working in existing production systems where reliability, domain understanding and careful delivery matter."
       />
-      <ExperienceTimeline />
+      <div class="reveal reveal-d1">
+        <ExperienceTimeline />
+      </div>
     </div>
   </section>
 
-  <section class="section-pad surface-band">
+  <section class="section-pad surface-band home-section">
     <div class="container-shell split-layout">
       <SectionIntro
+        class="reveal"
         eyebrow="Technology"
         title="A production stack centered on TypeScript and C#/.NET."
         text="Frameworks are tools inside broader systems of application behavior, APIs, data and long-term maintenance."
       />
-      <TechStack />
+      <div class="reveal reveal-d1">
+        <TechStack />
+      </div>
     </div>
   </section>
 
-  <section class="section-pad">
+  <section class="section-pad home-section">
     <div class="container-shell about-layout">
-      <div class="about-portrait">
+      <div class="about-portrait reveal">
         <img
           src="/aleksandar-novakovic.png"
           alt="Aleksandar Novakovic"
@@ -107,10 +143,13 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
           height="256"
           loading="lazy"
         />
+        <p class="trace-annotation">Novi Sad · 45.2671° N</p>
       </div>
-      <div class="about-copy">
-        <p class="eyebrow">About</p>
-        <h2>Independent engineering through {person.company}.</h2>
+      <div class="about-copy reveal reveal-d1">
+        <p class="annotation">About</p>
+        <h2 class="display-heading">
+          Independent engineering through {person.company}.
+        </h2>
         <p>
           I am a full-stack software engineer from Novi Sad, working with
           companies as an independent B2B contractor. I join existing product
@@ -128,62 +167,208 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
     </div>
   </section>
 
-  <section class="contact-band">
+  <section class="contact-band home-section">
     <div class="container-shell contact-layout">
-      <div>
-        <p class="eyebrow">Contact</p>
-        <h2>Available for B2B software engineering engagements.</h2>
+      <div class="reveal">
+        <p class="annotation">Contact</p>
+        <h2 class="display-heading">
+          Available for B2B software engineering engagements.
+        </h2>
       </div>
-      <a href="/contact" class="action action-primary">Start a conversation</a>
+      <a href="/contact" class="action action-primary reveal reveal-d1">
+        Start a conversation
+      </a>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .intro {
-    padding-block: 4rem 4.5rem;
+  .hero {
+    overflow: hidden;
+    padding-top: clamp(3rem, 8vw, 5.5rem);
   }
 
-  .hero-context {
-    color: var(--muted);
-    font-size: 0.875rem;
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
 
-  .hero-context span {
-    margin-inline: 0.35rem;
-    color: var(--signal);
+  .dot {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--accent);
   }
 
-  h1 {
-    margin-top: 2rem;
-    font-size: 3rem;
-    font-weight: 620;
-    letter-spacing: 0;
-    line-height: 0.95;
+  .hero-name {
+    margin-top: clamp(1.5rem, 3.5vw, 2.5rem);
+    color: var(--ink);
+    font-size: var(--text-display);
+    line-height: 0.88;
   }
 
-  h1 span {
-    color: var(--signal);
+  .hero-line {
+    display: block;
+    overflow: hidden;
   }
 
-  .hero-copy {
-    max-width: 42rem;
-    margin-top: 2rem;
+  .hero-line > span {
+    display: block;
   }
 
-  .hero-description {
-    max-width: 58ch;
-    color: var(--muted);
-    font-size: 1.0625rem;
-    line-height: 1.7;
+  .hero-trace {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: clamp(-0.25rem, -0.5vw, -0.5rem);
   }
 
-  .hero-actions,
-  .about-links {
+  .trace-ghost {
+    fill: none;
+    stroke: var(--line-strong);
+    stroke-width: 1;
+  }
+
+  .trace-line {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+
+  .trace-node {
+    fill: var(--canvas);
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+
+  .trace-node-solid {
+    fill: var(--accent);
+  }
+
+  .trace-label {
+    fill: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .hero-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2rem;
+    gap: 2rem 3rem;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+    padding-bottom: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    margin: 0;
+    color: var(--body);
+    font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+    font-weight: 500;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* Hero entrance (ticket 07, MOTION 01) - page load, once, ~1.4s.
+     Scoped to motion-allowed so reduced-motion lands on the resting state. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-eyebrow,
+    .hero-meta,
+    .trace-node,
+    .trace-label {
+      opacity: 0;
+    }
+
+    .hero-line > span {
+      transform: translateY(110%);
+    }
+
+    .trace-line {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+
+    .hero-eyebrow {
+      animation: hero-fade 420ms var(--ease-out) 60ms forwards;
+    }
+
+    .hero-line:nth-of-type(1) > span {
+      animation: hero-rise 560ms var(--ease-out) 140ms forwards;
+    }
+
+    .hero-line:nth-of-type(2) > span {
+      animation: hero-rise 560ms var(--ease-out) 260ms forwards;
+    }
+
+    .trace-line {
+      animation: hero-draw 720ms var(--ease-out) 520ms forwards;
+    }
+
+    .trace-node {
+      animation: hero-fade 240ms var(--ease-out) forwards;
+    }
+
+    .trace-node:nth-of-type(1) {
+      animation-delay: 700ms;
+    }
+
+    .trace-node:nth-of-type(2) {
+      animation-delay: 800ms;
+    }
+
+    .trace-node:nth-of-type(3) {
+      animation-delay: 900ms;
+    }
+
+    .trace-node:nth-of-type(4) {
+      animation-delay: 1000ms;
+    }
+
+    .trace-node:nth-of-type(5) {
+      animation-delay: 1100ms;
+    }
+
+    .hero-meta,
+    .trace-label {
+      animation: hero-fade 480ms var(--ease-out) 1000ms forwards;
+    }
+
+    @keyframes hero-fade {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes hero-rise {
+      from {
+        transform: translateY(110%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes hero-draw {
+      from {
+        stroke-dashoffset: 1;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  }
+
+  .home-section {
+    border-top: 1px solid var(--line);
   }
 
   .section-link {
@@ -199,29 +384,39 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
     width: 8rem;
   }
 
+  /* the source portrait is a circular crop - frame it as one */
+  .about-portrait img {
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    filter: grayscale(1);
+  }
+
+  .about-portrait .trace-annotation {
+    margin-top: 0.75rem;
+  }
+
   .about-copy {
     max-width: 43rem;
   }
 
-  .about-copy h2,
-  .contact-layout h2 {
-    margin-top: 0.75rem;
-    font-size: 2rem;
-    font-weight: 620;
-    letter-spacing: 0;
-    line-height: 1.08;
+  .about-copy h2 {
+    margin-top: 1.25rem;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
   }
 
-  .about-copy > p:not(.eyebrow) {
+  .about-copy > p:not(.annotation) {
     max-width: 60ch;
     margin-top: 1.5rem;
-    color: var(--muted);
+    color: var(--body);
     font-size: 1.0625rem;
     line-height: 1.7;
   }
 
   .about-links {
+    display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
+    margin-top: 1.5rem;
   }
 
   .contact-band {
@@ -237,6 +432,8 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
 
   .contact-layout h2 {
     max-width: 18ch;
+    margin-top: 1.25rem;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
   }
 
   .contact-layout .action {
@@ -244,23 +441,6 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
   }
 
   @media (min-width: 48rem) {
-    .intro {
-      padding-block: 5rem 4.5rem;
-    }
-
-    h1 {
-      margin-top: 2.25rem;
-      font-size: 4rem;
-    }
-
-    .hero-copy {
-      margin-top: 2.25rem;
-    }
-
-    .hero-description {
-      font-size: 1.125rem;
-    }
-
     .split-layout {
       display: grid;
       grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
@@ -284,20 +464,9 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
       width: 10rem;
     }
 
-    .about-copy h2,
-    .contact-layout h2 {
-      font-size: 2.5rem;
-    }
-
     .contact-layout {
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 4rem;
-    }
-  }
-
-  @media (min-width: 64rem) {
-    h1 {
-      font-size: 4.5rem;
     }
   }
 </style>

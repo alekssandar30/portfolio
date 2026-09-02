@@ -1,5 +1,4 @@
 ---
-import SectionIntro from "@/components/SectionIntro.astro";
 import { person } from "@/data/person";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { personSchema, professionalServiceSchema } from "@/lib/schema";
@@ -16,22 +15,51 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
 >
   <section class="page-section">
     <div class="container-shell">
-      <SectionIntro
-        eyebrow="About"
-        title="Software engineering for production systems."
-        text="Full-stack engineering across established enterprise applications and product teams."
-      />
+      <header class="page-head">
+        <div class="head-rule">
+          <p class="annotation">About</p>
+          <p class="annotation head-meta">Novi Sad · 45.2671° N, 19.8335° E</p>
+        </div>
+        <h1 class="display-heading">
+          Software engineering for production systems.
+        </h1>
+      </header>
 
       <div class="profile-layout">
-        <aside>
-          <img
-            src="/aleksandar-novakovic.png"
-            alt="Aleksandar Novakovic"
-            width="256"
-            height="256"
-          />
-          <p>{person.location}</p>
-          <p>{person.company}</p>
+        <aside class="profile-aside">
+          <figure>
+            <img
+              src="/aleksandar-novakovic.png"
+              alt="Aleksandar Novakovic"
+              width="256"
+              height="256"
+            />
+            <figcaption class="trace-annotation">
+              {person.name} - {person.location}
+            </figcaption>
+          </figure>
+
+          <dl class="profile-facts">
+            <div>
+              <dt class="trace-annotation">Engagement</dt>
+              <dd>Independent B2B contractor through {person.company}</dd>
+            </div>
+            <div>
+              <dt class="trace-annotation">Education</dt>
+              <dd>{person.education.institution}</dd>
+              <dd>{person.education.focus}</dd>
+            </div>
+            <div>
+              <dt class="trace-annotation">Languages</dt>
+              {
+                person.languages.map((language) => (
+                  <dd>
+                    {language.name} · {language.level}
+                  </dd>
+                ))
+              }
+            </div>
+          </dl>
         </aside>
 
         <div class="profile-copy">
@@ -55,35 +83,18 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
             improving architecture where it matters and delivering features
             without destabilizing production.
           </p>
-          <p>
-            My workflow has increasingly become AI-native. I use coding agents
-            for codebase exploration, implementation planning, research,
-            refactoring and development while keeping architecture, verification
-            and engineering decisions under explicit control.
+          <p class="kw-group">
+            My workflow has increasingly become
+            <span class="kw-scan">AI-native</span>. I use coding agents for
+            codebase exploration, implementation planning, research,
+            refactoring and development while keeping architecture,
+            verification and engineering decisions under explicit control.
           </p>
           <p>
             I care less about particular frameworks than about building software
             that remains understandable, maintainable and useful after it
             reaches production.
           </p>
-
-          <dl class="profile-facts">
-            <div>
-              <dt>Education</dt>
-              <dd>{person.education.institution}</dd>
-              <dd>{person.education.focus}</dd>
-            </div>
-            <div>
-              <dt>Languages</dt>
-              {
-                person.languages.map((language) => (
-                  <dd>
-                    {language.name} · {language.level}
-                  </dd>
-                ))
-              }
-            </div>
-          </dl>
         </div>
       </div>
     </div>
@@ -92,7 +103,27 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
 
 <style>
   .page-section {
-    padding-block: 5rem 7rem;
+    padding-block: 4rem 7rem;
+  }
+
+  .page-head {
+    margin-bottom: 3rem;
+  }
+
+  .head-rule {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .head-meta {
+    color: var(--faint);
+  }
+
+  h1 {
+    max-width: 18ch;
+    margin-top: 1.5rem;
+    font-size: clamp(2rem, 5.4vw, 3.75rem);
   }
 
   .profile-layout {
@@ -100,18 +131,37 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
     gap: 3rem;
   }
 
-  aside img {
-    width: 8rem;
+  .profile-aside figure {
+    max-width: 12rem;
+    margin: 0;
   }
 
-  aside p {
-    margin-top: 1rem;
+  /* the source portrait is a circular crop - frame it as one */
+  .profile-aside img {
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    filter: grayscale(1);
+  }
+
+  .profile-aside figcaption {
+    margin-top: 0.75rem;
+  }
+
+  .profile-facts {
+    display: grid;
+    gap: 1.75rem;
+    margin: 2.5rem 0 0;
+  }
+
+  .profile-facts dd {
+    margin: 0.5rem 0 0;
     color: var(--muted);
     font-size: 0.875rem;
+    line-height: 1.55;
   }
 
-  aside p + p {
-    margin-top: 0.2rem;
+  .profile-facts dd + dd {
+    margin-top: 0.25rem;
   }
 
   .profile-copy {
@@ -120,7 +170,7 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
 
   .profile-copy > p {
     margin-top: 1.5rem;
-    color: var(--muted);
+    color: var(--body);
     font-size: 1.0625rem;
     line-height: 1.75;
   }
@@ -132,41 +182,18 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
     line-height: 1.45;
   }
 
-  .profile-facts {
-    display: grid;
-    gap: 2rem;
-    margin-top: 3.5rem;
-  }
-
-  dt {
-    margin-bottom: 0.75rem;
-    color: var(--signal-strong);
-    font-size: 0.875rem;
-    font-weight: 650;
-  }
-
-  dd {
-    margin: 0.25rem 0 0;
-    color: var(--muted);
-    font-size: 0.9375rem;
-  }
-
   @media (min-width: 48rem) {
     .page-section {
-      padding-block: 8rem 10rem;
+      padding-block: 6rem 10rem;
+    }
+
+    .page-head {
+      margin-bottom: 4.5rem;
     }
 
     .profile-layout {
-      grid-template-columns: 12rem minmax(0, 1fr);
+      grid-template-columns: 13rem minmax(0, 1fr);
       gap: 6rem;
-    }
-
-    aside img {
-      width: 10rem;
-    }
-
-    .profile-facts {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 </style>

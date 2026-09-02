@@ -3,13 +3,13 @@ import { navigation } from "@/data/navigation";
 import { person } from "@/data/person";
 
 const pathname = Astro.url.pathname;
+const wordmark = `A.${person.name.split(" ")[1].toUpperCase()}`;
 ---
 
 <header class="site-header">
-  <nav class="primary-nav container-shell" aria-label="Primary navigation">
+  <nav class="primary-nav shell-bleed" aria-label="Primary navigation">
     <a href="/" class="site-identity" aria-label="Aleksandar Novakovic home">
-      <span class="identity-short" aria-hidden="true">AN</span>
-      <span class="identity-name">{person.name}</span>
+      {wordmark}
     </a>
     <div class="nav-items">
       {
@@ -54,22 +54,16 @@ const pathname = Astro.url.pathname;
     display: inline-flex;
     min-height: 2.75rem;
     align-items: center;
-    font-size: 0.9375rem;
-    font-weight: 700;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
   }
 
   .nav-items {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 100%;
-  }
-
-  .identity-short {
-    display: block;
-  }
-
-  .identity-name {
-    display: none;
   }
 
   .nav-link {
@@ -80,8 +74,10 @@ const pathname = Astro.url.pathname;
     justify-content: center;
     padding-inline: 0.25rem;
     color: var(--muted);
-    font-size: 0.875rem;
-    font-weight: 560;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     transition: color 160ms var(--ease-out);
   }
 
@@ -91,7 +87,7 @@ const pathname = Astro.url.pathname;
     bottom: 0.35rem;
     left: 0.25rem;
     height: 1px;
-    background: var(--signal);
+    background: var(--accent);
     content: "";
     opacity: 0;
     transform: scaleX(0.7);
@@ -100,9 +96,12 @@ const pathname = Astro.url.pathname;
       transform 160ms var(--ease-out);
   }
 
-  .nav-link:hover,
-  .nav-link-active {
+  .nav-link:hover {
     color: var(--ink);
+  }
+
+  .nav-link-active {
+    color: var(--accent);
   }
 
   .nav-link-active::after {
@@ -120,14 +119,6 @@ const pathname = Astro.url.pathname;
       padding-block: 0;
     }
 
-    .identity-short {
-      display: none;
-    }
-
-    .identity-name {
-      display: block;
-    }
-
     .nav-link {
       padding-inline: 0.7rem;
     }
@@ -141,7 +132,7 @@ const pathname = Astro.url.pathname;
       display: flex;
       width: auto;
       align-items: center;
-      gap: 1rem;
+      gap: 1.25rem;
     }
   }
 </style>

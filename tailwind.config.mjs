@@ -6,17 +6,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        canvas: "oklch(15.5% 0.012 150)",
-        surface: "oklch(19.5% 0.016 150)",
-        ink: "oklch(94% 0.009 145)",
-        muted: "oklch(71% 0.012 145)",
-        faint: "oklch(56% 0.01 145)",
-        signal: "oklch(70% 0.105 154)",
+        canvas: "#0d110d",
+        surface: "#131813",
+        ink: "#edf2ea",
+        body: "#b6bfb3",
+        muted: "#97a295",
+        faint: "#5d675c",
+        accent: "#d7f755",
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["ui-monospace", "SFMono-Regular", "monospace"],
+        sans: ["Archivo", "Segoe UI", "system-ui", "sans-serif"],
+        display: ["Archivo", "Segoe UI", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"],
+      },
+      borderRadius: {
+        DEFAULT: "3px",
       },
     },
   },

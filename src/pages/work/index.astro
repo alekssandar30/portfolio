@@ -1,19 +1,12 @@
 ---
-import ProjectCard from "@/components/ProjectCard.astro";
-import SectionIntro from "@/components/SectionIntro.astro";
+import ProjectRow from "@/components/ProjectRow.astro";
+import { projectIndex } from "@/data/projects";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-const projectOrder = [
-  "linetracker",
-  "tender-scanner",
-  "ehzzo",
-  "nct",
-  "swap-fm",
-];
 const projects = (await getCollection("projects"))
   .filter((project) => project.data.visibility !== "unknown")
-  .sort((a, b) => projectOrder.indexOf(a.slug) - projectOrder.indexOf(b.slug));
+  .sort((a, b) => projectIndex(a.slug) - projectIndex(b.slug));
 ---
 
 <BaseLayout
@@ -23,13 +16,20 @@ const projects = (await getCollection("projects"))
 >
   <section class="page-section">
     <div class="container-shell">
-      <SectionIntro
-        eyebrow="Work"
-        title="Selected systems and product work."
-        text="Production engineering across industrial software, procurement technology, banking, healthcare and startup environments."
-      />
-      <div>
-        {projects.map((project) => <ProjectCard project={project} />)}
+      <header class="page-head">
+        <p class="annotation">Work</p>
+        <h1 class="display-heading">Selected systems and product work.</h1>
+        <p class="page-lede">
+          Production engineering across industrial software, procurement
+          technology, banking, healthcare and startup environments.
+        </p>
+      </header>
+      <div class="project-index">
+        {
+          projects.map((project) => (
+            <ProjectRow project={project} class="reveal" />
+          ))
+        }
       </div>
     </div>
   </section>
@@ -37,12 +37,34 @@ const projects = (await getCollection("projects"))
 
 <style>
   .page-section {
-    padding-block: 5rem 7rem;
+    padding-block: 4rem 7rem;
+  }
+
+  .page-head {
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    max-width: 18ch;
+    margin-top: 1.5rem;
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+  }
+
+  .page-lede {
+    max-width: 58ch;
+    margin-top: 1.5rem;
+    color: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
   }
 
   @media (min-width: 48rem) {
     .page-section {
-      padding-block: 8rem 10rem;
+      padding-block: 6rem 10rem;
+    }
+
+    .page-head {
+      margin-bottom: 4.5rem;
     }
   }
 </style>

@@ -6,7 +6,7 @@ export const siteConfig = {
   defaultTitle: `${person.name} | ${person.title}`,
   description:
     "Full-stack software engineer specializing in TypeScript and C#/.NET, building production web systems for companies across Europe.",
-  url: "https://aleksandar-novakovic.dev",
+  url: import.meta.env.SITE,
   ogImage: "/og.svg",
 } as const;
 
