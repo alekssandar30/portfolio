@@ -2,15 +2,17 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-const notes = (await getCollection("notes")).filter(
-  (note) => note.data.published,
-);
+const notes = (await getCollection("notes"))
+  .filter((note) => note.data.published)
+  .sort(
+    (a, b) =>
+      (b.data.pubDate?.getTime() ?? 0) - (a.data.pubDate?.getTime() ?? 0),
+  );
 ---
 
 <BaseLayout
   title="Notes"
   description="Technical notes on full-stack engineering, .NET, TypeScript and AI-native software workflows."
-  pathname="/notes"
 >
   <section class="page-section">
     <div class="container-shell">

@@ -26,12 +26,12 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
 <BaseLayout
   title={note.data.title}
   description={note.data.description}
-  pathname={`/notes/${note.slug}`}
   jsonLd={articleSchema(
     siteUrl,
     `/notes/${note.slug}`,
     note.data.title,
     note.data.description,
+    note.data.pubDate,
   )}
 >
   <article class="note-page">

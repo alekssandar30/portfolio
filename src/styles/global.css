@@ -272,8 +272,32 @@ h3 {
     color: var(--accent);
   }
 
+  /* @tailwindcss/typography ships a light palette; every var it drives that we
+     do not override explicitly below lands near-black on the dark canvas. */
   .prose {
+    --tw-prose-body: var(--body);
+    --tw-prose-headings: var(--ink);
+    --tw-prose-lead: var(--body);
+    --tw-prose-links: var(--accent);
+    --tw-prose-bold: var(--ink);
+    --tw-prose-counters: var(--faint);
+    --tw-prose-bullets: var(--faint);
+    --tw-prose-hr: var(--line-strong);
+    --tw-prose-quotes: var(--ink);
+    --tw-prose-quote-borders: var(--accent);
+    --tw-prose-captions: var(--faint);
+    --tw-prose-code: var(--accent);
+    --tw-prose-pre-code: var(--ink);
+    --tw-prose-pre-bg: var(--surface);
+    --tw-prose-th-borders: var(--line-strong);
+    --tw-prose-td-borders: var(--line);
     color: var(--body);
+  }
+
+  /* the plugin renders literal backticks around inline code */
+  .prose :where(code)::before,
+  .prose :where(code)::after {
+    content: none;
   }
 
   .prose :where(h2, h3) {
@@ -292,6 +316,58 @@ h3 {
 
   .prose :where(strong) {
     color: var(--ink);
+  }
+
+  /* Wide editorial diagrams. They are authored at 1400 viewBox units, so the
+     65ch prose column would shrink their labels to ~6px: the figure breaks out
+     to the viewport instead, and scrolls horizontally below ~68rem. The left
+     offset undoes .note-shell's centering, so it tracks that gutter. */
+  .prose figure.diagram {
+    --fig-shell-gutter: 1rem;
+    --fig-half: min(50vw - var(--fig-shell-gutter), 42rem);
+    --fig-line: rgba(237, 242, 234, 0.24);
+    --fig-tint: rgba(215, 247, 85, 0.1);
+    --fig-warn: #e8845c;
+    width: calc(2 * var(--fig-half));
+    margin-block: 2.75rem;
+    margin-inline: calc(
+        50vw - var(--fig-half) -
+          max(var(--fig-shell-gutter), (100vw - 48rem) / 2)
+      )
+      0;
+  }
+
+  .prose figure.diagram .fig-canvas {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .prose figure.diagram svg {
+    width: 100%;
+    min-width: 68rem;
+    height: auto;
+  }
+
+  .prose figure.diagram figcaption {
+    margin-top: 0.85rem;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* the scroll hint is noise once the diagram fits */
+  @media (min-width: 74rem) {
+    .prose figure.diagram figcaption {
+      display: none;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .prose figure.diagram {
+      --fig-shell-gutter: 2rem;
+    }
   }
 }
 

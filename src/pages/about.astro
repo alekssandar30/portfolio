@@ -10,7 +10,6 @@ const siteUrl = Astro.site?.toString() ?? siteConfig.url;
 <BaseLayout
   title="About"
   description="About Aleksandar Novakovic, full-stack software engineer."
-  pathname="/about"
   jsonLd={[personSchema(siteUrl), professionalServiceSchema(siteUrl)]}
 >
   <section class="page-section">
