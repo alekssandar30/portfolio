@@ -11,7 +11,7 @@ const wordmark = `A.${person.name.split(" ")[1].toUpperCase()}`;
     <a href="/" class="site-identity">
       {wordmark}
     </a>
-    <div class="nav-items">
+    <div class="nav-items" style={`--nav-count: ${navigation.length}`}>
       {
         navigation.map((item) => (
           <a
@@ -62,7 +62,7 @@ const wordmark = `A.${person.name.split(" ")[1].toUpperCase()}`;
 
   .nav-items {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--nav-count), minmax(0, 1fr));
     width: 100%;
   }
 

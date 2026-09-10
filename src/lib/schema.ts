@@ -56,12 +56,16 @@ export function articleSchema(
   path: string,
   title: string,
   description: string,
+  datePublished?: Date,
 ) {
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: title,
     description,
+    ...(datePublished
+      ? { datePublished: datePublished.toISOString().slice(0, 10) }
+      : {}),
     author: {
       "@type": "Person",
       name: person.name,
